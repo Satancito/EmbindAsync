@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmbindAsync - Tests</title>
+    <script type="text/javascript" src="EmbindAsync.js" defer></script>
+</head>
+
+<body>
+    <button onclick="onClick(1)">Call GetBase64Sha256Async</button>
+    <button onclick="onClick(2)">Call GetBase64Sha256Normal</button>
+    <script>
+        async function onClick(opt) {
+            switch (opt) {
+                case 1:
+                    var result = await Main.Module.GetBase64Sha256Async("grape");
+                    alert(result);
+                    break;
+                case 2:
+                    var result = Main.Module.GetBase64Sha256Normal("grape");
+                    alert(result);
+                    break;
+                default:
+                    break;
+            }
+        }
+    </script>
+
+</body>
+
+</html>
