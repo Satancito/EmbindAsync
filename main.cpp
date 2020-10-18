@@ -11,7 +11,6 @@
 //     var base64 = btoa(String.fromCharCode.apply(null, new Uint8Array(digestValue)));//6
 //     return base64;//7
 
-
 /* Get undefined immediately in Js, if is called from JS. While the function process continues running.  
     If it called from CPP runs normally.
 */
@@ -20,13 +19,13 @@ emscripten::val GetBase64Sha256Normal(const String &text)
     USING_EMSCRIPTEN;
     USING_INSANE_EMSCRIPTEN;
 
-    val encoder = val::global()[u8"TextEncoder"].new_();                                                           //1
-    val data = encoder.call<val>(u8"encode", val(text));                                                           //2
-    Console::Log(u8"ask for digest for "s, text);                                                                  //3
-    val digestValue = val::global()[u8"crypto"][u8"subtle"].call<val>(u8"digest", val(u8"SHA-256"), data).await(); //4
-    Console::Log(u8"got digest of length "s, digestValue[u8"byteLength"]);                                         //5
-    val base64 = val::global().call<val>(u8"btoa", val::global()[u8"String"][u8"fromCharCode"].call<val>(u8"apply", val::null(), val::global()[u8"Uint8Array"].new_(digestValue)));//6
-    return base64;//7
+    val encoder = val::global()[u8"TextEncoder"].new_();                                                                                                                            //1
+    val data = encoder.call<val>(u8"encode", val(text));                                                                                                                            //2
+    Console::Log(u8"ask for digest for "s, text);                                                                                                                                   //3
+    val digestValue = val::global()[u8"crypto"][u8"subtle"].call<val>(u8"digest", val(u8"SHA-256"), data).await();                                                                  //4
+    Console::Log(u8"got digest of length "s, digestValue[u8"byteLength"]);                                                                                                          //5
+    val base64 = val::global().call<val>(u8"btoa", val::global()[u8"String"][u8"fromCharCode"].call<val>(u8"apply", val::null(), val::global()[u8"Uint8Array"].new_(digestValue))); //6
+    return base64;                                                                                                                                                                  //7
 }
 
 /* Returns a promise. Value can be unwrapped using await from Js. 
@@ -43,14 +42,14 @@ emscripten::val GetBase64Sha256Async(const String &text)
 
     EMSCRIPTEN_VAL_FUNCTOR_TYPE(1)
     callback = [](val digestValue) -> val {
-        Console::Log(u8"got digest of length "s, digestValue[u8"byteLength"]); //5
-        val base64 = val::global().call<val>(u8"btoa", val::global()[u8"String"][u8"fromCharCode"].call<val>(u8"apply", val::null(), val::global()[u8"Uint8Array"].new_(digestValue)));//6
-        return base64;//7
+        Console::Log(u8"got digest of length "s, digestValue[u8"byteLength"]);                                                                                                          //5
+        val base64 = val::global().call<val>(u8"btoa", val::global()[u8"String"][u8"fromCharCode"].call<val>(u8"apply", val::null(), val::global()[u8"Uint8Array"].new_(digestValue))); //6
+        return base64;                                                                                                                                                                  //7
     };
 
-    val encoder = val::global()[u8"TextEncoder"].new_();                                                           //1
-    val data = encoder.call<val>(u8"encode", val(text));                                                           //2
-    Console::Log(u8"ask for digest for "s, text);                                                                  //3
+    val encoder = val::global()[u8"TextEncoder"].new_();                                                                                //1
+    val data = encoder.call<val>(u8"encode", val(text));                                                                                //2
+    Console::Log(u8"ask for digest for "s, text);                                                                                       //3
     return val::global()[u8"crypto"][u8"subtle"].call<val>(u8"digest", val(u8"SHA-256"), data).call<val>(u8"then", Js::Bind(callback)); //4
 }
 
@@ -63,7 +62,7 @@ int main()
 
 EMSCRIPTEN_BINDINGS(exports)
 {
-    USING_EMSCRIPTEN;  
+    USING_EMSCRIPTEN;
     /*
 
     class_<std::function<void(emscripten::val)>>("VoidValFunctor")
@@ -86,7 +85,7 @@ EMSCRIPTEN_BINDINGS(exports)
     .constructor<>()
     .function("opcall", &std::function<emscripten::val(emscripten::val, emscripten::val, emscripten::val)>::operator());
    */
-    EMSCRIPTEN_EXPORT_ALL_VAL_FUNCTORS(5); 
+    EMSCRIPTEN_EXPORT_ALL_VAL_FUNCTORS(5);
 
     function<val>(u8"GetBase64Sha256Normal", &GetBase64Sha256Normal);
     function<val>(u8"GetBase64Sha256Async", &GetBase64Sha256Async);
