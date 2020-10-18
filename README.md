@@ -7,10 +7,9 @@ Steps to configure
 Create a environment variable named as **EMSCRIPTEN_DIR** with the location of emsdk folder.   
 Example on my pc, get enviroment variable value.
 
+```PS> Write-Host $env:EMSCRIPTEN_DIR```
 ```
-PS> Write-Host $env:EMSCRIPTEN_DIR
 I:\WebAssembly\emsdk
-PS>
 ```
 
 ## **2. Install PowerShell Core**
