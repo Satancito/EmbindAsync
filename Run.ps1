@@ -1,1 +1,2 @@
+& $($IsWindows ? "emrun.bat" : "emrun") --list_browsers
 & $($IsWindows ? "emrun.bat" : "emrun") --browser ($IsWindows ? "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" :  "chrome") index.html
