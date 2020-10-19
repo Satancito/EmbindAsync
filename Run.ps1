@@ -1,1 +1,1 @@
-& $($IsWindows ? "emrun.bat" : "emrun") --browser "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" index.html
+& $($IsWindows ? "emrun.bat" : "emrun") --browser ($IsWindows ? "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" :  "chrome") index.html

@@ -1,4 +1,4 @@
-& "$Env:EMSCRIPTEN_DIR/upstream\emscripten/$($IsWindows ? "em++.bat" : "em++")" `
+& "$Env:EMSCRIPTEN_DIR/upstream/emscripten/$($IsWindows ? "em++.bat" : "em++")" `
 main.cpp `
 -I ./ `
 -o EmbindAsync.js `
