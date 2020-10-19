@@ -15,11 +15,17 @@
         async function onClick(opt) {
             switch (opt) {
                 case 1:
+                    console.log("BEFORE 1");
                     var result = await Main.Module.GetBase64Sha256Async("grape");
+                    console.log("RESULT: " + result);
+                    console.log("AFTER 1");
                     alert(result);
                     break;
                 case 2:
+                    console.log("BEFORE 2");
                     var result = Main.Module.GetBase64Sha256Normal("grape");
+                    console.log("RESULT: " + result);
+                    console.log("AFTER 2");
                     alert(result);
                     break;
                 default:

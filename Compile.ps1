@@ -1,6 +1,5 @@
 & "$Env:EMSCRIPTEN_DIR/upstream\emscripten/em++.bat" `
 main.cpp `
-InsaneEmscripten.cpp `
 -I ./ `
 -o EmbindAsync.js `
 -std=c++17 `

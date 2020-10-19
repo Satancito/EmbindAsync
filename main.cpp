@@ -58,6 +58,7 @@ int main()
     USING_EMSCRIPTEN;
     USING_INSANE_EMSCRIPTEN;
     Console::Log("Module instance created."s);
+
 }
 
 EMSCRIPTEN_BINDINGS(exports)

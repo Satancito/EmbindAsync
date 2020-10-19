@@ -19,23 +19,22 @@
 #define USING_EMSCRIPTEN using namespace emscripten
 #define USING_INSANE_EMSCRIPTEN using namespace Insane::Emscripten
 
-#define EMPTY_STR (u8""s)
 typedef std::string String;
 using namespace std::string_literals;
 
 namespace Insane::Emscripten
 {
-    enum class ConsoleMessageType
-    {
-        LOG,
-        INFO,
-        WARN,
-        ERROR
-    };
 
     class Console
     {
     private:
+        enum class ConsoleMessageType
+        {
+            LOG,
+            INFO,
+            WARN,
+            ERROR
+        };
         template <typename... ParamType,
                   typename = typename std::void_t<std::enable_if_t<std::is_same_v<ParamType, String> ||
                                                                    std::is_same_v<ParamType, emscripten::val> ||
@@ -44,7 +43,7 @@ namespace Insane::Emscripten
         static inline void Print(ConsoleMessageType type, const ParamType &... args)
         {
             USING_EMSCRIPTEN;
-            String method = EMPTY_STR;
+            String method = u8""s;
             switch (type)
             {
             case ConsoleMessageType::INFO:
@@ -115,14 +114,26 @@ namespace Insane::Emscripten
     {
     private:
     public:
-        static emscripten::val Resolve(const emscripten::val &value);
-        static emscripten::val Reject(const emscripten::val &value);
+        static inline emscripten::val Resolve(const emscripten::val &value)
+        {
+            USING_EMSCRIPTEN;
+            return val::global()[u8"Promise"].call<val>(u8"resolve", value);
+        }
+        static inline emscripten::val Reject(const emscripten::val &value)
+        {
+            USING_EMSCRIPTEN;
+            return val::global()[u8"Promise"].call<val>(u8"reject", value);
+        }
     };
 
     class Js
     {
     private:
-        static emscripten::val Bind(const emscripten::val &fx);
+        static inline emscripten::val Bind(const emscripten::val &fx)
+        {
+            USING_EMSCRIPTEN;
+            return fx["opcall"].call<val>("bind", fx);
+        }
 
     public:
         template <typename ReturnType,
